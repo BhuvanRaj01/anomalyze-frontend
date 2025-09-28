@@ -1,0 +1,59 @@
+.footer-section {
+  /* Semi-transparent background that feels lighter than the body */
+  background-color: rgba(26, 26, 58, 0.5);
+  /* A subtle border to define the top edge */
+  border-top: 1px solid rgba(0, 191, 255, 0.2);
+  padding: 3rem 2rem;
+  /* Glassmorphism effect */
+  backdrop-filter: blur(5px);
+}
+
+.footer-content-wrapper {
+  /* This container will constrain the content's width */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--neon-blue);
+  text-decoration: underline;
+}
+
+.footer-copyright {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* On larger screens, arrange links and copyright side-by-side */
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .footer-links {
+    gap: 2rem;
+  }
+}

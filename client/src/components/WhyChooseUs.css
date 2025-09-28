@@ -1,0 +1,46 @@
+.why-choose-us-section {
+  padding: 100px 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* A subtle top border with a gradient to separate the section */
+  border-top: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+.why-choose-us-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 5rem;
+  text-shadow: var(--shadow-glow);
+}
+
+.features-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap; /* Allows items to stack on smaller screens */
+}
+
+.feature-item {
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.feature-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

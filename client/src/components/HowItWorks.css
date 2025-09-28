@@ -1,0 +1,85 @@
+.how-it-works-section {
+  padding: 100px 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.how-it-works-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 5rem;
+  text-shadow: var(--shadow-glow);
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  gap: 2rem;
+}
+
+/* The connector line */
+.steps-container::before {
+  content: '';
+  position: absolute;
+  top: 35px; /* Aligns with the middle of the number circle */
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background-color: rgba(0, 191, 255, 0.2);
+  z-index: 0;
+}
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 0 1rem;
+}
+
+.step-number {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--neon-blue);
+  background-color: var(--space-dark);
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-glow);
+}
+
+.step-title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.step-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .steps-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+  }
+  /* Hide the horizontal line on mobile */
+  .steps-container::before {
+    display: none;
+  }
+}

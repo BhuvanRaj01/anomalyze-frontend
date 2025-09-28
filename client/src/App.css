@@ -1,0 +1,6 @@
+.app-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  /* We remove the horizontal padding to allow sections to go full-width */
+  padding: 0;
+}
