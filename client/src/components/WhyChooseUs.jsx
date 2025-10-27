@@ -8,7 +8,7 @@ const WhyChooseUs = () => {
         Why Anomalise?
       </h2>
       <div className="features-container">
-        {/* Feature 1: Honesty */}
+       
         <div className="feature-item" data-aos="fade-up" data-aos-delay="100">
           <div className="feature-icon">🤝</div>
           <h3 className="feature-title">Radical Honesty</h3>
@@ -17,7 +17,6 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        {/* Feature 2: Affordability */}
         <div className="feature-item" data-aos="fade-up" data-aos-delay="200">
           <div className="feature-icon">💰</div>
           <h3 className="feature-title">Clear Affordability</h3>
@@ -26,7 +25,6 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        {/* Feature 3: Hassle-Free Service */}
         <div className="feature-item" data-aos="fade-up" data-aos-delay="300">
           <div className="feature-icon">🚀</div>
           <h3 className="feature-title">Streamlined Process</h3>

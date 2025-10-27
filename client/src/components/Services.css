@@ -14,23 +14,23 @@
 
 .services-grid {
   display: grid;
-  /* This is a flexible grid for tablets and smaller devices */
+ 
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
-/* This media query targets larger screens (laptops/desktops) */
+
 @media (min-width: 992px) {
   .services-grid {
-    /* We force it into a 4-column layout on big screens */
+   
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* A fallback for very wide screens if you ever add more services */
+
 @media (min-width: 1200px) {
   .services-grid {
-      /* You could change this to 5 or keep it at 4 */
+ 
       grid-template-columns: repeat(4, 1fr);
   }
 }

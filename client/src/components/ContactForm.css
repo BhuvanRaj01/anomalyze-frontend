@@ -16,7 +16,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  
 }
 
 .contact-form-container p {
@@ -51,7 +50,7 @@
 
 .form-group input:focus {
   border-color: var(--glow-primary);
-  box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 0 0 2px rgba(79, 172, 24, 0.3);
   outline: none;
 }
 
@@ -83,7 +82,7 @@
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  flex-shrink: 0; /* Prevents checkbox from shrinking */
+  flex-shrink: 0;
 }
 
 .checkbox-label input[type="checkbox"]:checked {
@@ -103,11 +102,11 @@
 }
 
 .required-star {
-  color: #ff6b6b; /* Soft red color */
+  color: #ff6b6b;
   margin-left: 4px;
 }
 
-/* Replace your old .consent-label rule with this */
+/* This is the corrected rule for the consent label */
 .consent-label {
     display: flex;
     align-items: flex-start; /* Aligns checkbox with the top of the text */
@@ -136,7 +135,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  margin-top: 1rem; /* Added margin for better spacing */
+  margin-top: 1rem;
 }
 
 .submit-btn:hover:not(:disabled) {
