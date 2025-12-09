@@ -1,48 +1,56 @@
 import express from 'express';
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import cors from 'cors';
-import 'dotenv/config'; // Use this for ES Module dotenv
+import 'dotenv/config';
+import Submission from './models/Submission.js'; 
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-// --- Middleware ---
 app.use(cors());
 app.use(express.json());
 
+// --- Connect to MongoDB Atlas ---
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
 
-async function run() {
+mongoose.connect(uri)
+  .then(() => console.log("✅ Successfully connected to MongoDB Atlas!"))
+  .catch(err => console.error("❌ Failed to connect to MongoDB", err));
+
+app.post('/api/submit', async (req, res) => {
   try {
-    await client.connect();
-    console.log("Successfully connected to MongoDB Atlas!");
+    console.log('Received raw submission:', req.body);
+
+    // --- TRANSLATION LAYER ---
+    // We map the incoming "messy" names to our "clean" Schema names
+    const cleanData = {
+      fullName: req.body.fullName,
+      email: req.body.email,
+      phone: req.body.phoneNumber,    // Frontend sends 'phoneNumber', we save as 'phone'
+      company: req.body.company,
+      targetUrl: req.body.targetURL,  // Frontend sends 'targetURL', we save as 'targetUrl'
+      scope: req.body.scope,
+      tests: req.body.services,       // Frontend sends 'services', we save as 'tests'
+      consent: req.body.consent
+    };
+
+    // Create and Save
+    const newSubmission = new Submission(cleanData);
+    const result = await newSubmission.save();
     
-    const database = client.db("AnomaliseDB");
-    const submissionsCollection = database.collection("submissions");
+    console.log(`✅ Saved to DB with ID: ${result._id}`);
+    res.status(201).json({ message: 'Submission successful', id: result._id });
 
-    // --- API Route for Form Submission ---
-    app.post('/api/submit', async (req, res) => {
-      try {
-        const submission = req.body;
-        console.log('Received submission:', submission);
-
-        const result = await submissionsCollection.insertOne(submission);
-        console.log(`New submission created with id: ${result.insertedId}`);
-        
-        res.status(201).json({ message: 'Submission successful', id: result.insertedId });
-      } catch (error) {
-        console.error('Error saving submission:', error);
-        res.status(500).json({ message: 'Error saving to database' });
-      }
-    });
-
-  } catch (err) {
-    console.error("Failed to connect to MongoDB", err);
+  } catch (error) {
+    console.error('❌ Error saving submission:', error);
+    
+    // Send the specific validation error back to the frontend
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ message: 'Validation Error', errors: error.errors });
+    }
+    res.status(500).json({ message: 'Error saving to database' });
   }
-}
-
-run().catch(console.dir);
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

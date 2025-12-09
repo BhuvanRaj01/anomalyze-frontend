@@ -6,9 +6,9 @@ const ContactForm = () => {
     fullName: '',
     email: '',
     targetURL: '',
-    phoneNumber: '', // New optional field
+    phoneNumber: '',
     services: [],
-    consent: false, // New mandatory checkbox
+    consent: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -17,7 +17,6 @@ const ContactForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    // Handle checkboxes vs other inputs
     const inputValue = type === 'checkbox' ? checked : value;
     
     setFormData((prevData) => ({
@@ -39,18 +38,22 @@ const ContactForm = () => {
   const validate = () => {
     let tempErrors = {};
     if (!formData.fullName.trim()) tempErrors.fullName = 'Full name is required.';
+    
     if (!formData.email) {
       tempErrors.email = 'Email is required.';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       tempErrors.email = 'Email address is invalid.';
     }
+
+    // --- UPDATED VALIDATION ---
+    // Only checks if it is empty, allows "messy" URLs like https/mongo/
     if (!formData.targetURL.trim()) {
         tempErrors.targetURL = 'Target URL is required.';
-    } else if (!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(formData.targetURL)) {
-        tempErrors.targetURL = 'Please enter a valid URL.';
-    }
+    } 
+    // Strict Regex validation removed to prevent getting stuck
+
     if (formData.services.length === 0) tempErrors.services = 'Please select at least one service.';
-    if (!formData.consent) tempErrors.consent = 'You must consent to the security test.'; // Validation for consent
+    if (!formData.consent) tempErrors.consent = 'You must consent to the security test.'; 
 
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -63,17 +66,21 @@ const ContactForm = () => {
       setSubmitMessage('Submitting...');
 
       try {
+        // Ensure VITE_API_BASE_URL is set in your frontend .env file
         const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/submit`;
+        
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
         });
+        
         const result = await response.json();
 
         if (!response.ok) throw new Error(result.message || 'Something went wrong.');
         
         setSubmitMessage('Success! Your request has been sent.');
+        // Clear form on success
         setFormData({ fullName: '', email: '', targetURL: '', phoneNumber: '', services: [], consent: false });
 
       } catch (error) {
@@ -102,6 +109,7 @@ const ContactForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="targetURL">Target URL <span className="required-star">*</span></label>
+          {/* Changed type to text to prevent browser blocking */}
           <input type="text" id="targetURL" name="targetURL" value={formData.targetURL} onChange={handleInputChange} placeholder="e.g., https://example.com" required />
           {errors.targetURL && <span className="error-text">{errors.targetURL}</span>}
         </div>
@@ -112,7 +120,6 @@ const ContactForm = () => {
         <div className="form-group">
           <label>Services of Interest <span className="required-star">*</span></label>
           <div className="checkbox-group">
-            {/* ... your service checkboxes ... */}
             <label className="checkbox-label">
               <input type="checkbox" name="services" value="Web App Pentesting" checked={formData.services.includes('Web App Pentesting')} onChange={handleCheckboxChange} />
               Web App Pentesting
